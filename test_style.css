@@ -1,0 +1,105 @@
+body{
+  background-color: #222;
+}
+.talk_circle{
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  top: calc(50vh - 75px);
+  left: calc(50vw - 75px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
+  opacity: 0.4;
+  border-radius: 500px;
+  transition: .25s;
+  transition-timing-function: cubic-bezier(0,.99,.12,.8);
+}
+.talk_circle_bis{
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  top: calc(50vh - 75px);
+  left: calc(50vw - 75px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
+  opacity: 0.4;
+  border-radius: 500px;
+  transition: 1s;
+}
+.talk_circle_ter{
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  top: calc(50vh - 75px);
+  left: calc(50vw - 75px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
+  opacity: 0.4;
+  border-radius: 500px;
+  transition: 3s;
+}
+.txt_screen{
+  position: fixed;
+  width: 100vw;
+  font-size: 12pt;
+  font-family: sans-serif;
+  color: #AAA;
+  bottom: 5vh;
+  left: 0;
+  text-align: center;
+}
+.rec_console{
+  position: fixed;
+  background-color: #222;
+  color: #DDD;
+  width: 25vw;
+  height: 100vh;
+  padding: 25px;
+  left: 0;
+  top: 0;
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+.console_line{
+  display: inline-block;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+  border-bottom: solid 1px #444;
+}
+.question_zone{
+  position: fixed;
+  bottom: 5vh;
+  left: 30vw;
+  width: 40vw;
+  text-align: center;
+}
+.question_input{
+  display: inline-block;
+  vertical-align: text-top;
+  color: #444;
+  background-color: #FFF;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  padding: 0.5vw;
+  padding-left: 1vw;
+  width: 28vw;
+  border: none;
+  border-radius: 50px;
+}
+.question_button{
+  display: inline-block;
+  vertical-align: text-top;
+  background-color: #444;
+  color: #FFF;
+  border-radius: 50px;
+  margin-left: 2vw;
+  width: 7vw;
+  padding: 0.5vw;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
