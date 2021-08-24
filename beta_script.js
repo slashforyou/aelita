@@ -103,10 +103,6 @@ function search_verbe(id){
   return new Promise((resolve,reject)=>{
     var word_search = analyse_word_table[id];
 
-    if(verbe_position != null){
-      if(!complement_direct[id])
-        complement_direct[id] = new Array();
-    }
     if(analyse_word_table[id - 1] && analyse_word_table[id - 1].match(reg_article_contr)){
       analyse_type_table[id] = 'nom';
       reject();
@@ -233,7 +229,6 @@ function search_verbe(id){
               if(word_search.match(/.+(ée)$/i)){
                 var regex = /^(.+)ée$/i;
                 word_search = word_search.replace(regex, "$1é");
-                console.log("word_search changement => " + word_search)
               }
 
               if(analyse_word_table[aux - 1] && analyse_word_table[aux - 1].match(/^(le|la|les|l)$/i)){
@@ -561,7 +556,9 @@ function search_verbe(id){
       if(word_found != null){
         if(!sujet[id]){
           sujet[id] = new Array();
+          complement_direct[id] = new Array();
         }
+
         analyse_type_table[id] = 'verbe';
         verbe_position = id;
         if(famille == 'subjonctif'){
@@ -690,32 +687,31 @@ async function word_detect(phrase){
     i++;
   }
 
-  i = 0;
+  analyse_phrase();
+}
+function analyse_phrase(){
+  console_add('analyse démarrée', 'green');
+  verbe_position = null;
+
+  var i = 0;
+
   var verbe_act = false;
   while(analyse_word_table[i]){
     var do_aux = null;
     if(analyse_type_table[i] == 'auxiliaire'){
       var n = 0;
       while(analyse_word_table[n]){
-        console.log('détection auxiliaire = ' + analyse_word_table[n]);
-        if(verbe_array[n] && verbe_array[n][6] == i){
-          console.log('détection auxiliaire verbe = ' + verbe_array[n][1]);
+        if(verbe_array[n])
+        if(verbe_array[n] && verbe_array[n][5] == i){
           do_aux = 1;
         }
         else{}
-        console.log("do_aux = " + do_aux);
         n++;
       }
-      console.log("do_aux id = " + i);
       if(do_aux == null)
         analyse_type_table[i] = 'verbe';
     }
 
-    /*if(verbe_act == true){
-      if(!complement_direct[verbe_position])
-        complement_direct[verbe_position] = new Array();
-      complement_direct[verbe_position].push(analyse_word_table[i]);
-    }*/
     if(analyse_type_table[i] == 'verbe')
       verbe_act = true;
     if(analyse_type_table[i]){
@@ -729,17 +725,8 @@ async function word_detect(phrase){
     }
     i++;
   }
-  analyse_phrase();
-}
-function analyse_phrase(){
-  //analyse_word_table --> Chaque mot de la phrase
-  //analyse_type_table --> Le type de chaque mot de la phrase
-  //verbe_array --> temps/famille/personne de chaque verbe
 
-  console_add('analyse démarrée', 'green');
-  verbe_position = null;
-
-  var i = 0;
+  i = 0;
 
   while(analyse_word_table[i]){
     if(verbe_array[i] && verbe_array[i][2] != 'infinitif' && analyse_type_table[i] != 'auxiliaire'){
@@ -840,6 +827,21 @@ function analyse_phrase(){
       else
         console.error("le complément direct est : " + complement_direct[i].join(' '));
       validation[i] = 1;
+    }
+    else if(complement_direct[i]){
+      var n = i + 1;
+      while(n < analyse_word_table.length && analyse_type_table[n] != "verbe" && analyse_type_table[n] != "auxiliaire"){
+        complement_direct[i].push(analyse_word_table[n]);
+        n++;
+      }
+      if(complement_direct[i].join(' ') != ''){
+        say_it += "le complément direct est : " + complement_direct[i].join(' ') + ". ";
+        if(verbe_array[i])
+          console.error("le complément direct de " + verbe_array[i][0] + " est : " + complement_direct[i].join(' '));
+        else
+          console.error("le complément direct est : " + complement_direct[i].join(' '));
+        validation[i] = 1;
+      }
     }
     i++;
   }
